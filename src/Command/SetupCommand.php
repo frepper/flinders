@@ -93,7 +93,7 @@ class SetupCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
 
-        $filename = $this->projectDir . '/assets/sales.csv';
+        $filename = $this->projectDir . '/data/sales.csv';
         $firstLine = true;
         if (($handle = fopen($filename, "r")) !== false) {
             while (($data = fgetcsv($handle, 1000, ";")) !== false) {
