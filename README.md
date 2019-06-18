@@ -20,7 +20,7 @@ Yarn 1.16.0
 
 
 ###### clone the repository 
-```git clone https://github.com/alfons56/flinders.git```
+```git clone https://github.com/frepper/flinders.git```
 
 ###### move into the project folder 
 ```cd flinders```
