@@ -17,11 +17,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * Class Sales
  * @package App\Entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Entity\Repository\ProductRepository")
  * @ORM\Table()
  *
  * @ApiResource(
- *     collectionOperations={"get"},
+ *     normalizationContext={"groups"={"product:output"}, "datetime_format"="Y-m-d"},
+ *     collectionOperations={"get", "get_by_month"={"route_name"="products_get_by_month","method"="GET"}},
  *     itemOperations={"get"}
  * )
  */
@@ -32,7 +33,7 @@ class Product
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      *
-     * @Groups({"sales:output"})
+     * @Groups({"sales:output", "product:output"})
      *
      * @var int
      */
@@ -41,7 +42,7 @@ class Product
     /**
      * @ORM\Column(type="string")
      *
-     * @Groups({"sales:output"})
+     * @Groups({"sales:output", "product:output"})
      *
      * @var string
      */
@@ -49,6 +50,8 @@ class Product
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Sales", mappedBy="product", cascade={"persist"}, orphanRemoval=true)
+     *
+     * @Groups({"product:output"})
      *
      * @var ArrayCollection
      */

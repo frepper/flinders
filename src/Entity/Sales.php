@@ -17,7 +17,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * Class Sales
  * @package App\Entity
  *
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Entity\Repository\SalesRepository")
  * @ORM\Table()
  *
  * @ApiResource(
@@ -34,7 +34,7 @@ class Sales
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="IDENTITY")
      *
-     * @Groups({"sales:output"})
+     * @Groups({"sales:output", "product:output"})
      *
      * @ApiProperty(identifier=true)
      *
@@ -45,7 +45,7 @@ class Sales
     /**
      * @ORM\Column(type="float")
      *
-     * @Groups({"sales:output"})
+     * @Groups({"sales:output", "product:output"})
      *
      * @var float
      */
@@ -54,7 +54,7 @@ class Sales
     /**
      * @ORM\Column(type="integer")
      *
-     * @Groups({"sales:output"})
+     * @Groups({"sales:output", "product:output"})
      *
      * @var integer
      */
@@ -63,7 +63,7 @@ class Sales
     /**
      * @ORM\Column(type="date")
      *
-     * @Groups({"sales:output"})
+     * @Groups({"sales:output", "product:output"})
      *
      * @var \DateTime
      */
