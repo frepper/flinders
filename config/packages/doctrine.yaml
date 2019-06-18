@@ -22,5 +22,4 @@ doctrine:
                 alias: App
         dql:
             string_functions:
-                MONTH: DoctrineExtensions\Query\Mysql\Month
-                YEAR: DoctrineExtensions\Query\Mysql\Year
+                DATE_FORMAT: DoctrineExtensions\Query\Mysql\DateFormat

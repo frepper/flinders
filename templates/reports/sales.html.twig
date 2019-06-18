@@ -11,10 +11,16 @@
 {% endblock %}
 
 {% block body %}
-    <div id="quantity-container"></div>
-    <div id="price-container"></div>
+    <div id="quantity-container" style = "width: 800px; height: 400px; margin: 0 auto; padding: 10px;"></div>
+    <div id="price-container"  style = "width: 800px; height: 400px; margin: 0 auto; padding: 10px;"></div>
+
     <script language="JavaScript">
         $(document).ready(function () {
+
+            const formatter = new Intl.NumberFormat('nl-NL', {
+                style: 'currency',
+                currency: 'EUR'
+            });
 
             var quantityOptions = {
                 chart: {
@@ -23,6 +29,11 @@
                 },
                 title: {text: 'Sales by quantity'},
                 xAxis: {},
+                yAxis:{
+                    title: {
+                        text: 'Quantity'
+                    }
+                },
                 series: []
             };
 
@@ -33,6 +44,21 @@
                 },
                 title: {text: 'Sales by price'},
                 xAxis: {},
+                yAxis:{
+                    labels: {
+                        formatter: function() {
+                            return formatter.format(this.value);
+                        }
+                    },
+                    title: {
+                        text: 'Price'
+                    }
+                },
+                tooltip: {
+                    pointFormatter: function() {
+                        return '<span>' + this.series.name + '</span>: <b>' + formatter.format(this.y) + '</b>'
+                    }
+                },
                 series: []
             };
 
@@ -43,31 +69,34 @@
                 var priceSeries = [];
                 var firstProduct = true;
                 $.each(data, function (index, product) {
-                    if (typeof quantitySeries[product.product_id] === 'undefined') {
-                        quantitySeries[product.product_id] = {
-                            name: product.product_name,
+                    // new series for each product
+                    if (typeof quantitySeries[product[0].id] === 'undefined') {
+                        quantitySeries[product[0].id] = {
+                            name: product[0].name,
                             data: []
                         };
-                        priceSeries[product.product_id] = {
-                            name: product.product_name,
+                        priceSeries[product[0].id] = {
+                            name: product[0].name,
                             data: []
                         };
                     }
                     categories.push(product.date);
-                    quantitySeries[product.product_id].data.push(parseFloat(product.quantity));
-                    priceSeries[product.product_id].data.push(parseFloat(product.price));
+                    quantitySeries[product[0].id].data.push(parseFloat(product.quantity));
+                    priceSeries[product[0].id].data.push(parseFloat(product.price));
+                    // only add the categories once
                     if (firstProduct) {
                         quantityOptions.xAxis.categories = categories;
                         priceOptions.xAxis.categories = categories;
                         firstProduct = false;
                     }
-
                 });
+                // Build options for quantity chart
                 $.each(quantitySeries, function (index, item) {
                     if (typeof item !== 'undefined') {
                         quantityOptions.series.push(item);
                     }
                 });
+                // Build options for price chart
                 $.each(priceSeries, function (index, item) {
                     if (typeof item !== 'undefined') {
                         priceOptions.series.push(item);
@@ -76,127 +105,6 @@
                 var quantityChart = new Highcharts.Chart(quantityOptions);
                 var priceChart = new Highcharts.Chart(priceOptions);
             });
-
-
-            var title = {
-                text: 'Daily visits at www.highcharts.com'
-            };
-
-            {#var subtitle = {#}
-            {#    text: 'Source: Google Analytics'#}
-            {#};#}
-
-            {#var xAxis = {#}
-            {#    tickInterval: 7 * 24 * 3600 * 1000, // one week#}
-            {#    tickWidth: 0,#}
-            {#    gridLineWidth: 1,#}
-
-            {#    labels: {#}
-            {#        align: 'left',#}
-            {#        x: 3,#}
-            {#        y: -3#}
-            {#    }#}
-            {#};#}
-
-            {#var yAxis = [#}
-            {#    { // left y axis#}
-            {#        title: {#}
-            {#            text: null#}
-            {#        },#}
-            {#        labels: {#}
-            {#            align: 'left',#}
-            {#            x: 3,#}
-            {#            y: 16,#}
-            {#            format: '{value:.,0f}'#}
-            {#        },#}
-            {#        showFirstLabel: false#}
-            {#    },#}
-            {#    { // right y axis#}
-            {#        linkedTo: 0,#}
-            {#        gridLineWidth: 0,#}
-            {#        opposite: true,#}
-
-            {#        title: {#}
-            {#            text: null#}
-            {#        },#}
-            {#        labels: {#}
-            {#            align: 'right',#}
-            {#            x: -3,#}
-            {#            y: 16,#}
-            {#            format: '{value:.,0f}'#}
-            {#        },#}
-            {#        showFirstLabel: false#}
-            {#    }#}
-            {#];#}
-
-            {#var tooltip = {#}
-            {#    shared: true,#}
-            {#    crosshairs: true#}
-            {#};#}
-
-            {#var legend = {#}
-            {#    align: 'left',#}
-            {#    verticalAlign: 'top',#}
-            {#    y: 20,#}
-            {#    floating: true,#}
-            {#    borderWidth: 0#}
-            {#};#}
-
-            {#var plotOptions = {#}
-            {#    series: {#}
-            {#        cursor: 'pointer',#}
-            {#        point: {#}
-            {#            events: {#}
-            {#                click: function (e) {#}
-            {#                    hs.htmlExpand(null, {#}
-            {#                        pageOrigin: {#}
-            {#                            x: e.pageX || e.clientX,#}
-            {#                            y: e.pageY || e.clientY#}
-            {#                        },#}
-            {#                        headingText: this.series.name,#}
-            {#                        maincontentText: Highcharts.dateFormat(#}
-            {#                            '%A, %b %e, %Y', this.x) +#}
-            {#                            ':<br/> ' + this.y +#}
-            {#                            ' visits', width: 200#}
-            {#                    });#}
-            {#                }#}
-            {#            }#}
-            {#        },#}
-            {#        marker: {#}
-            {#            lineWidth: 1#}
-            {#        }#}
-            {#    }#}
-            {#};#}
-
-            {#var series = [#}
-            {#    {#}
-            {#        name: 'All visits',#}
-            {#        lineWidth: 4,#}
-            {#        marker: {#}
-            {#            radius: 4#}
-            {#        }#}
-            {#    },#}
-            {#    {#}
-            {#        name: 'New visitors'#}
-            {#    }#}
-            {#];#}
-
-            {#var json = {};#}
-            {#json.title = title;#}
-            {#json.subtitle = subtitle;#}
-            {#json.xAxis = xAxis;#}
-            {#json.yAxis = yAxis;#}
-            {#json.tooltip = tooltip;#}
-            {#json.legend = legend;#}
-            {#json.series = series;#}
-            {#json.plotOptions = plotOptions;#}
-
-            {#$.getJSON('{{ path('api_sales_get_collection') ~ '.json'}}', function (csv) {#}
-            {#    json.data = {#}
-            {#        json: csv#}
-            {#    };#}
-            {#    $('#container').highcharts(json);#}
-            {#});#}
         });
     </script>
 {% endblock %}
