@@ -46,6 +46,8 @@ The backend call for reporting is: ```http://localhost/products/monthly```
 
 The frontend will be reachable at: ```http://localhost/reports/sales```
 
+Tests can be run with build in phpunit: ```./bin/phpunit```
+
 Front and backend calls are both in the same project for sake of ease but the two are totally independant and data for the reports is loaded through ajax
 
 Screen shot
