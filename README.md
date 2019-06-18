@@ -46,4 +46,9 @@ The backend call for reporting is: ```http://localhost/products/monthly```
 
 The frontend will be reachable at: ```http://localhost/reports/sales```
 
-Front and backend calls are both in the same project for sake of ease but the two are totally independant
+Front and backend calls are both in the same project for sake of ease but the two are totally independant and data for the reports is loaded through ajax
+
+Screen shot
+--------
+
+![screen shot](https://raw.githubusercontent.com/frepper/flinders/master/data/ScreenshotSalesreports.png)
