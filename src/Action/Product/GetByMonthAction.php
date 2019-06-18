@@ -37,9 +37,6 @@ class GetByMonthAction
     {
         $result = [];
         $products = $this->manager->getRepository('App:Product')->getSalesByMonth();
-//        foreach ($products as $product) {
-//            $result[] = ['name' => $product->getName()];
-//        }
         return new JsonResponse($products);
     }
 }
