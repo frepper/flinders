@@ -1,4 +1,4 @@
-Flinders simple sales charts
+Simple sales charts
 ========
 
 
