@@ -20,10 +20,10 @@ Yarn 1.16.0
 
 
 ###### clone the repository 
-```git clone https://github.com/frepper/flinders.git```
+```git clone https://github.com/frepper/sales-test.git```
 
 ###### move into the project folder 
-```cd flinders```
+```cd sales-test```
 
 ###### Install dependencies
 ```composer install```
@@ -53,4 +53,4 @@ Front and backend calls are both in the same project for sake of ease but the tw
 Screen shot
 --------
 
-![screen shot](https://raw.githubusercontent.com/frepper/flinders/master/data/ScreenshotSalesreports.png)
+![screen shot](https://raw.githubusercontent.com/frepper/sales-test/master/data/ScreenshotSalesreports.png)
